@@ -1,0 +1,678 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <title>Schema documentation for </title>
+      <link rel="stylesheet" href="docHtml.css" type="text/css" /><script type="text/javascript">
+         <!--
+        
+      
+        var button_prefix = 'button_';
+        
+        /**
+        * Returns an element in the current HTML document.
+        *
+        * @param elementID Identifier of HTML element
+        * @return               HTML element object
+        */
+        function getElementObject(elementID) {
+            var elemObj = null;
+            if (document.getElementById) {
+                elemObj = document.getElementById(elementID);
+            }
+            return elemObj;
+        }
+        
+        /**
+        * Switches the state of a collapseable box, e.g.
+        * if it's opened, it'll be closed, and vice versa.
+        *
+        * @param boxID Identifier of box
+        */
+        function switchState(boxID) {
+            var boxObj = getElementObject(boxID);
+            var buttonObj = getElementObject(button_prefix + boxID);
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else if (boxObj.style.display == "none") {
+                // Box is closed, so open it
+                openBox(boxObj, buttonObj);
+            } else if (boxObj.style.display == "block") {
+                // Box is opened, so close it
+                closeBox(boxObj, buttonObj);
+            }
+        }
+        
+        /**
+        * Opens a collapseable box.
+        *
+        * @param boxObj       Collapseable box
+        * @param buttonObj Button controlling box
+        */
+        function openBox(boxObj, buttonObj) {
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else {
+                // Change 'display' CSS property of box
+                boxObj.style.display = "block";
+                
+                // Change text of button
+                if (boxObj.style.display == "block") {
+                    buttonObj.src = "img/btM.gif";
+                }
+            }
+        }
+        
+        /**
+        * Closes a collapseable box.
+        *
+        * @param boxObj       Collapseable box
+        * @param buttonObj Button controlling box
+        */
+        function closeBox(boxObj, buttonObj) {
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else {
+                // Change 'display' CSS property of box
+                boxObj.style.display = "none";
+                
+                // Change text of button
+                if (boxObj.style.display == "none") {
+                    buttonObj.src = "img/btP.gif";
+                }
+            }
+        }
+    
+       function switchStateForAll(buttonObj, boxList) {
+            if (buttonObj == null) {
+                // button not found
+            } else if (buttonObj.value == "+") {
+                // Expand all
+                expandAll(boxList);
+                buttonObj.value = "-";
+            } else if (buttonObj.value == "-") {
+                // Collapse all
+                collapseAll(boxList);
+                buttonObj.value = "+";
+            }
+        }
+        
+        /**
+        * Closes all boxes in a given list.
+        *
+        * @param boxList Array of box IDs
+        */
+        function collapseAll(boxList) {
+            var idx;
+            for (idx = 0; idx < boxList.length; idx++) {
+                var boxObj = getElementObject(boxList[idx]);
+                var buttonObj = getElementObject(button_prefix + boxList[idx]);
+                closeBox(boxObj, buttonObj);
+            }
+        }
+            
+        /**
+        * Open all boxes in a given list.
+        *
+        * @param boxList Array of box IDs
+        */
+        function expandAll(boxList) {
+            var idx;
+            for (idx = 0; idx < boxList.length; idx++) {
+                var boxObj = getElementObject(boxList[idx]);
+                var buttonObj = getElementObject(button_prefix + boxList[idx]);
+                openBox(boxObj, buttonObj);
+            }
+        }
+        
+        /**
+         * Update the message presented in the title of the html page.
+         * - If the documentation was splited by namespace we present something like: "Documentation for namespace 'ns'"
+         * - If the documentation was splited by location we present somehing like: "Documentation for 'Schema.xsd'"
+         * - If no split we always present: "Documentation for 'MainSchema.xsd'"
+         */
+        function updatePageTitle(message) {
+            top.document.title = message;
+        }
+        
+          
+                    
+         /**
+          * Finds an HTML element by its ID and makes it floatable over the normal content.
+          *
+          * @param x_displacement The difference in pixels to the right side of the window from 
+          *           the left side of the element.
+          * @param y_displacement The difference in pixels to the right side of the window from 
+          *           the top of the element.          
+          */
+         function findAndFloat(id, x_displacement, y_displacement){
+
+            var element = getElementObject(id);            
+            
+            window[id + "_obj"] = element;
+            
+            if(document.layers) {
+               element.style = element;
+            }
+            
+            element.current_y = y_displacement;      
+            element.first_time = true;
+         
+            element.floatElement = function(){
+               // It may be closed by an user action.
+                
+               // Target X and Y coordinates.
+               var x, y;
+               
+               var myWidth = 0, myHeight = 0;
+               if( typeof( window.innerWidth ) == 'number' ) {
+                  //Non-IE
+                  myWidth = window.innerWidth;
+                  myHeight = window.innerHeight;
+               } else if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {
+                  //IE 6+ in 'standards compliant mode'
+                  myWidth = document.documentElement.clientWidth;
+                  myHeight = document.documentElement.clientHeight;
+               } else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
+                  //IE 4 compatible
+                  myWidth = document.body.clientWidth;
+                  myHeight = document.body.clientHeight;
+               }
+               
+               
+               x = myWidth - x_displacement;
+               
+               var ns = (navigator.appName.indexOf("Netscape") != -1);               
+               y = ns ? pageYOffset : document.documentElement && document.documentElement.scrollTop ? 
+                  document.documentElement.scrollTop : document.body.scrollTop;               
+               y = y + y_displacement;               
+               
+               // The current y is the current coordinate of the floating element.
+               // This should be at the limit the y target coordinate.
+               this.current_y += (y - this.current_y)/1.25;
+               
+               // Add the pixels constant after the values
+               // and move the element.
+               var px = document.layers ? "" : "px";
+               this.style.left =  x + px;
+               this.style.top =  this.current_y + px;
+                              
+               setTimeout(this.id + "_obj.floatElement()", 100);
+            }
+            
+            element.floatElement();
+            return element;
+          }
+
+         /**
+          * Finds an HTML element by its ID and makes it floatable over the normal content.
+          *
+          * @param x_displacement The difference in pixels to the right side of the window from 
+          *           the left side of the element.
+          * @param y_displacement The difference in pixels to the right side of the window from 
+          *           the top of the element.          
+          */
+         function selectTOCGroupBy(id, isChunked, indexFileLocation, indexFileNamespace, indexFileComponent){
+
+            if (!isChunked) {
+             var selectIds = new Array('toc_group_by_namespace', 'toc_group_by_location', 'toc_group_by_component_type');
+             // Make all the tabs invisible.
+               for (i = 0; i < 3; i++){
+                  var tab = getElementObject(selectIds[i]);
+                  tab.style.display = 'none';
+               }
+               var selTab = getElementObject(id);
+               selTab.style.display = 'block';
+            } else {
+             if (id == 'toc_group_by_namespace') {
+               parent.indexFrame.location = indexFileNamespace;
+             } else  if (id == 'toc_group_by_location') {
+               parent.indexFrame.location = indexFileLocation;
+             } else  if (id == 'toc_group_by_component_type') {
+              parent.indexFrame.location = indexFileComponent;
+             }
+            }
+         }
+          
+
+    
+                        //--></script></head>
+   <body>
+      <h2><a id="INDEX">Table of Contents</a></h2>
+      <p><a href="mets.indexList.html">Components</a><span> | </span><a href="schHierarchy.html">Resource Hierarchy</a></p>
+      <hr />
+      <div class="toc">
+         <form action="none">
+            <div><span> Group by: <select id="selectTOC" onchange="selectTOCGroupBy(this.options[this.selectedIndex].value, true, 'mets.indexList.html', 'mets.indexListns.html', 'mets.indexListcomp.html');">
+                     <option value="toc_group_by_namespace">Namespace</option>
+                     <option value="toc_group_by_location">Location</option>
+                     <option value="toc_group_by_component_type" selected="selected">Component Type</option></select></span></div>
+         </form>
+         <div class="level1" id="toc_group_by_component_type" style="display:block">
+            <div>
+               <div class="horizontalLayout">
+                  <table class="rt">
+                     <tr>
+                        <td class="rt_cornerTopLeft"></td>
+                        <td class="rt_lineTop"></td>
+                        <td class="rt_cornerTopRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_lineLeft"></td>
+                        <td class="rt_content">
+                           <table class="componentGroup">
+                              <tbody>
+                                 <tr>
+                                    <td class="componentGroup"><input id="button_Main_schema" type="image" value="-" src="img/btM.gif" onclick="switchState('Main_schema');" class="control" /></td>
+                                    <td class="componentGroup">
+                                       <div class="componentGroupTitle">s</div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="componentGroup"></td>
+                                    <td class="componentGroup">
+                                       <div id="Main_schema" class="componentGroup" style="display:block">
+                                          <div><b><a href="mets_xsd_Main_schema_mets_xsd.html#mets.xsd" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component mets.xsd')">mets.xsd</a></b></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </td>
+                        <td class="rt_lineRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_cornerBottomLeft"></td>
+                        <td class="rt_lineBottom"></td>
+                        <td class="rt_cornerBottomRight"></td>
+                     </tr>
+                  </table>
+               </div>
+               <div class="horizontalLayout">
+                  <table class="rt">
+                     <tr>
+                        <td class="rt_cornerTopLeft"></td>
+                        <td class="rt_lineTop"></td>
+                        <td class="rt_cornerTopRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_lineLeft"></td>
+                        <td class="rt_content">
+                           <table class="componentGroup">
+                              <tbody>
+                                 <tr>
+                                    <td class="componentGroup"><input id="button_Element" type="image" value="-" src="img/btM.gif" onclick="switchState('Element');" class="control" /></td>
+                                    <td class="componentGroup">
+                                       <div class="componentGroupTitle">Elements</div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="componentGroup"></td>
+                                    <td class="componentGroup">
+                                       <div id="Element" class="componentGroup" style="display:block">
+                                          <div><b><a href="mets_xsd_Complex_Type_amdSecType.html#amdSecType_digiprovMD" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component amdSecType/digiprovMD')">amdSecType/digiprovMD</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_amdSecType.html#amdSecType_rightsMD" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component amdSecType/rightsMD')">amdSecType/rightsMD</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_amdSecType.html#amdSecType_sourceMD" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component amdSecType/sourceMD')">amdSecType/sourceMD</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_amdSecType.html#amdSecType_techMD" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component amdSecType/techMD')">amdSecType/techMD</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_behaviorSecType.html#behaviorSecType_behavior" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component behaviorSecType/behavior')">behaviorSecType/behavior</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_behaviorSecType.html#behaviorSecType_behaviorSec" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component behaviorSecType/behaviorSec')">behaviorSecType/behaviorSec</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_behaviorType.html#behaviorType_interfaceDef" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component behaviorType/interfaceDef')">behaviorType/interfaceDef</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_behaviorType.html#behaviorType_mechanism" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component behaviorType/mechanism')">behaviorType/mechanism</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_divType.html#divType_div" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component divType/div')">divType/div</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_divType.html#divType_fptr" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component divType/fptr')">divType/fptr</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_divType.html#divType_divType_fptr_area" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component divType/fptr/area')">divType/fptr/area</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_divType.html#divType_divType_fptr_par" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component divType/fptr/par')">divType/fptr/par</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_divType.html#divType_divType_fptr_seq" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component divType/fptr/seq')">divType/fptr/seq</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_divType.html#divType_mptr" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component divType/mptr')">divType/mptr</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileGrpType.html#fileGrpType_file" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component fileGrpType/file')">fileGrpType/file</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileGrpType.html#fileGrpType_fileGrp" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component fileGrpType/fileGrp')">fileGrpType/fileGrp</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_FContent" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component fileType/FContent')">fileType/FContent</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_fileType_FContent_binData" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component fileType/FContent/binData')">fileType/FContent/binData</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_fileType_FContent_xmlData" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component fileType/FContent/xmlData')">fileType/FContent/xmlData</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_FLocat" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component fileType/FLocat')">fileType/FLocat</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_file" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component fileType/file')">fileType/file</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_stream" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component fileType/stream')">fileType/stream</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_transformFile" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component fileType/transformFile')">fileType/transformFile</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_mdSecType.html#mdSecType_mdRef" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component mdSecType/mdRef')">mdSecType/mdRef</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_mdSecType.html#mdSecType_mdWrap" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component mdSecType/mdWrap')">mdSecType/mdWrap</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_mdSecType.html#mdSecType_mdSecType_mdWrap_binData" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component mdSecType/mdWrap/binData')">mdSecType/mdWrap/binData</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_mdSecType.html#mdSecType_mdSecType_mdWrap_xmlData" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component mdSecType/mdWrap/xmlData')">mdSecType/mdWrap/xmlData</a></b></div>
+                                          <div><b><a href="mets_xsd_Element_mets.html#mets" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component mets')">mets</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_amdSec" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component metsType/amdSec')">metsType/amdSec</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_behaviorSec" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component metsType/behaviorSec')">metsType/behaviorSec</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_dmdSec" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component metsType/dmdSec')">metsType/dmdSec</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_fileSec" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component metsType/fileSec')">metsType/fileSec</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_metsType_fileSec_fileGrp" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component metsType/fileSec/fileGrp')">metsType/fileSec/fileGrp</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_metsHdr" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component metsType/metsHdr')">metsType/metsHdr</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_metsType_metsHdr_agent" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component metsType/metsHdr/agent')">metsType/metsHdr/agent</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_metsType_metsHdr_metsType_metsType_metsHdr_agent_name" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component metsType/metsHdr/agent/name')">metsType/metsHdr/agent/name</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_metsType_metsHdr_metsType_metsType_metsHdr_agent_note" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component metsType/metsHdr/agent/note')">metsType/metsHdr/agent/note</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_metsType_metsHdr_altRecordID" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component metsType/metsHdr/altRecordID')">metsType/metsHdr/altRecordID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_metsType_metsHdr_metsDocumentID" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component metsType/metsHdr/metsDocumentID')">metsType/metsHdr/metsDocumentID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_structLink" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component metsType/structLink')">metsType/structLink</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_structMap" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component metsType/structMap')">metsType/structMap</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_parType.html#parType_area" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component parType/area')">parType/area</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_parType.html#parType_seq" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component parType/seq')">parType/seq</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_seqType.html#seqType_area" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component seqType/area')">seqType/area</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_seqType.html#seqType_par" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component seqType/par')">seqType/par</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_structLinkType.html#structLinkType_smLink" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component structLinkType/smLink')">structLinkType/smLink</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_structLinkType.html#structLinkType_smLinkGrp" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component structLinkType/smLinkGrp')">structLinkType/smLinkGrp</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_structLinkType.html#structLinkType_structLinkType_smLinkGrp_smArcLink" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component structLinkType/smLinkGrp/smArcLink')">structLinkType/smLinkGrp/smArcLink</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_structLinkType.html#structLinkType_structLinkType_smLinkGrp_smLocatorLink" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component structLinkType/smLinkGrp/smLocatorLink')">structLinkType/smLinkGrp/smLocatorLink</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_structMapType.html#structMapType_div" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component structMapType/div')">structMapType/div</a></b></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </td>
+                        <td class="rt_lineRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_cornerBottomLeft"></td>
+                        <td class="rt_lineBottom"></td>
+                        <td class="rt_cornerBottomRight"></td>
+                     </tr>
+                  </table>
+               </div>
+               <div class="horizontalLayout">
+                  <table class="rt">
+                     <tr>
+                        <td class="rt_cornerTopLeft"></td>
+                        <td class="rt_lineTop"></td>
+                        <td class="rt_cornerTopRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_lineLeft"></td>
+                        <td class="rt_content">
+                           <table class="componentGroup">
+                              <tbody>
+                                 <tr>
+                                    <td class="componentGroup"><input id="button_Complex_Type" type="image" value="-" src="img/btM.gif" onclick="switchState('Complex_Type');" class="control" /></td>
+                                    <td class="componentGroup">
+                                       <div class="componentGroupTitle">Complex Types</div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="componentGroup"></td>
+                                    <td class="componentGroup">
+                                       <div id="Complex_Type" class="componentGroup" style="display:block">
+                                          <div><b><a href="mets_xsd_Complex_Type_amdSecType.html#amdSecType" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component amdSecType')">amdSecType</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_areaType.html#areaType" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component areaType')">areaType</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_behaviorSecType.html#behaviorSecType" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component behaviorSecType')">behaviorSecType</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_behaviorType.html#behaviorType" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component behaviorType')">behaviorType</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_divType.html#divType" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component divType')">divType</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileGrpType.html#fileGrpType" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component fileGrpType')">fileGrpType</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component fileType')">fileType</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_mdSecType.html#mdSecType" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component mdSecType')">mdSecType</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component metsType')">metsType</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_objectType.html#objectType" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component objectType')">objectType</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_parType.html#parType" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component parType')">parType</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_seqType.html#seqType" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component seqType')">seqType</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_structLinkType.html#structLinkType" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component structLinkType')">structLinkType</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_structMapType.html#structMapType" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component structMapType')">structMapType</a></b></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </td>
+                        <td class="rt_lineRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_cornerBottomLeft"></td>
+                        <td class="rt_lineBottom"></td>
+                        <td class="rt_cornerBottomRight"></td>
+                     </tr>
+                  </table>
+               </div>
+               <div class="horizontalLayout">
+                  <table class="rt">
+                     <tr>
+                        <td class="rt_cornerTopLeft"></td>
+                        <td class="rt_lineTop"></td>
+                        <td class="rt_cornerTopRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_lineLeft"></td>
+                        <td class="rt_content">
+                           <table class="componentGroup">
+                              <tbody>
+                                 <tr>
+                                    <td class="componentGroup"><input id="button_Simple_Type" type="image" value="-" src="img/btM.gif" onclick="switchState('Simple_Type');" class="control" /></td>
+                                    <td class="componentGroup">
+                                       <div class="componentGroupTitle">Simple Types</div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="componentGroup"></td>
+                                    <td class="componentGroup">
+                                       <div id="Simple_Type" class="componentGroup" style="display:block">
+                                          <div><b><a href="mets_xsd_Simple_Type_URIs.html#URIs" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component URIs')">URIs</a></b></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </td>
+                        <td class="rt_lineRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_cornerBottomLeft"></td>
+                        <td class="rt_lineBottom"></td>
+                        <td class="rt_cornerBottomRight"></td>
+                     </tr>
+                  </table>
+               </div>
+               <div class="horizontalLayout">
+                  <table class="rt">
+                     <tr>
+                        <td class="rt_cornerTopLeft"></td>
+                        <td class="rt_lineTop"></td>
+                        <td class="rt_cornerTopRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_lineLeft"></td>
+                        <td class="rt_content">
+                           <table class="componentGroup">
+                              <tbody>
+                                 <tr>
+                                    <td class="componentGroup"><input id="button_Attribute" type="image" value="-" src="img/btM.gif" onclick="switchState('Attribute');" class="control" /></td>
+                                    <td class="componentGroup">
+                                       <div class="componentGroupTitle">Attributes</div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="componentGroup"></td>
+                                    <td class="componentGroup">
+                                       <div id="Attribute" class="componentGroup" style="display:block">
+                                          <div><b><a href="mets_xsd_Attribute_Group_FILECORE.html#FILECORE_CHECKSUM" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component FILECORE/@CHECKSUM')">FILECORE/@CHECKSUM</a></b></div>
+                                          <div><b><a href="mets_xsd_Attribute_Group_FILECORE.html#FILECORE_CHECKSUMTYPE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component FILECORE/@CHECKSUMTYPE')">FILECORE/@CHECKSUMTYPE</a></b></div>
+                                          <div><b><a href="mets_xsd_Attribute_Group_FILECORE.html#FILECORE_CREATED" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component FILECORE/@CREATED')">FILECORE/@CREATED</a></b></div>
+                                          <div><b><a href="mets_xsd_Attribute_Group_FILECORE.html#FILECORE_MIMETYPE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component FILECORE/@MIMETYPE')">FILECORE/@MIMETYPE</a></b></div>
+                                          <div><b><a href="mets_xsd_Attribute_Group_FILECORE.html#FILECORE_SIZE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component FILECORE/@SIZE')">FILECORE/@SIZE</a></b></div>
+                                          <div><b><a href="mets_xsd_Attribute_Group_LOCATION.html#LOCATION_LOCTYPE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component LOCATION/@LOCTYPE')">LOCATION/@LOCTYPE</a></b></div>
+                                          <div><b><a href="mets_xsd_Attribute_Group_LOCATION.html#LOCATION_OTHERLOCTYPE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component LOCATION/@OTHERLOCTYPE')">LOCATION/@OTHERLOCTYPE</a></b></div>
+                                          <div><b><a href="mets_xsd_Attribute_Group_METADATA.html#METADATA_MDTYPE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component METADATA/@MDTYPE')">METADATA/@MDTYPE</a></b></div>
+                                          <div><b><a href="mets_xsd_Attribute_Group_METADATA.html#METADATA_MDTYPEVERSION" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component METADATA/@MDTYPEVERSION')">METADATA/@MDTYPEVERSION</a></b></div>
+                                          <div><b><a href="mets_xsd_Attribute_Group_METADATA.html#METADATA_OTHERMDTYPE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component METADATA/@OTHERMDTYPE')">METADATA/@OTHERMDTYPE</a></b></div>
+                                          <div><b><a href="mets_xsd_Attribute_Group_ORDERLABELS.html#ORDERLABELS_LABEL" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component ORDERLABELS/@LABEL')">ORDERLABELS/@LABEL</a></b></div>
+                                          <div><b><a href="mets_xsd_Attribute_Group_ORDERLABELS.html#ORDERLABELS_ORDER" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component ORDERLABELS/@ORDER')">ORDERLABELS/@ORDER</a></b></div>
+                                          <div><b><a href="mets_xsd_Attribute_Group_ORDERLABELS.html#ORDERLABELS_ORDERLABEL" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component ORDERLABELS/@ORDERLABEL')">ORDERLABELS/@ORDERLABEL</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_amdSecType.html#amdSecType_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component amdSecType/@ID')">amdSecType/@ID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_areaType.html#areaType_ADMID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component areaType/@ADMID')">areaType/@ADMID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_areaType.html#areaType_BEGIN" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component areaType/@BEGIN')">areaType/@BEGIN</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_areaType.html#areaType_BETYPE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component areaType/@BETYPE')">areaType/@BETYPE</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_areaType.html#areaType_CONTENTIDS" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component areaType/@CONTENTIDS')">areaType/@CONTENTIDS</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_areaType.html#areaType_COORDS" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component areaType/@COORDS')">areaType/@COORDS</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_areaType.html#areaType_END" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component areaType/@END')">areaType/@END</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_areaType.html#areaType_EXTENT" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component areaType/@EXTENT')">areaType/@EXTENT</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_areaType.html#areaType_EXTTYPE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component areaType/@EXTTYPE')">areaType/@EXTTYPE</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_areaType.html#areaType_FILEID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component areaType/@FILEID')">areaType/@FILEID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_areaType.html#areaType_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component areaType/@ID')">areaType/@ID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_areaType.html#areaType_SHAPE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component areaType/@SHAPE')">areaType/@SHAPE</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_behaviorSecType.html#behaviorSecType_CREATED" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component behaviorSecType/@CREATED')">behaviorSecType/@CREATED</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_behaviorSecType.html#behaviorSecType_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component behaviorSecType/@ID')">behaviorSecType/@ID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_behaviorSecType.html#behaviorSecType_LABEL" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component behaviorSecType/@LABEL')">behaviorSecType/@LABEL</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_behaviorType.html#behaviorType_ADMID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component behaviorType/@ADMID')">behaviorType/@ADMID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_behaviorType.html#behaviorType_BTYPE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component behaviorType/@BTYPE')">behaviorType/@BTYPE</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_behaviorType.html#behaviorType_CREATED" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component behaviorType/@CREATED')">behaviorType/@CREATED</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_behaviorType.html#behaviorType_GROUPID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component behaviorType/@GROUPID')">behaviorType/@GROUPID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_behaviorType.html#behaviorType_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component behaviorType/@ID')">behaviorType/@ID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_behaviorType.html#behaviorType_LABEL" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component behaviorType/@LABEL')">behaviorType/@LABEL</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_behaviorType.html#behaviorType_STRUCTID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component behaviorType/@STRUCTID')">behaviorType/@STRUCTID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_divType.html#divType_ADMID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component divType/@ADMID')">divType/@ADMID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_divType.html#divType_CONTENTIDS" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component divType/@CONTENTIDS')">divType/@CONTENTIDS</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_divType.html#divType_DMDID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component divType/@DMDID')">divType/@DMDID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_divType.html#divType_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component divType/@ID')">divType/@ID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_divType.html#divType_TYPE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component divType/@TYPE')">divType/@TYPE</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_divType.html#divType_divType_fptr_CONTENTIDS" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component divType/fptr/@CONTENTIDS')">divType/fptr/@CONTENTIDS</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_divType.html#divType_divType_fptr_FILEID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component divType/fptr/@FILEID')">divType/fptr/@FILEID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_divType.html#divType_divType_fptr_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component divType/fptr/@ID')">divType/fptr/@ID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_divType.html#divType_divType_mptr_CONTENTIDS" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component divType/mptr/@CONTENTIDS')">divType/mptr/@CONTENTIDS</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_divType.html#divType_divType_mptr_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component divType/mptr/@ID')">divType/mptr/@ID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileGrpType.html#fileGrpType_ADMID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileGrpType/@ADMID')">fileGrpType/@ADMID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileGrpType.html#fileGrpType_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileGrpType/@ID')">fileGrpType/@ID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileGrpType.html#fileGrpType_USE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileGrpType/@USE')">fileGrpType/@USE</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileGrpType.html#fileGrpType_VERSDATE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileGrpType/@VERSDATE')">fileGrpType/@VERSDATE</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_ADMID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileType/@ADMID')">fileType/@ADMID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_BEGIN" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileType/@BEGIN')">fileType/@BEGIN</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_BETYPE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileType/@BETYPE')">fileType/@BETYPE</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_DMDID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileType/@DMDID')">fileType/@DMDID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_END" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileType/@END')">fileType/@END</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_GROUPID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileType/@GROUPID')">fileType/@GROUPID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileType/@ID')">fileType/@ID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_OWNERID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileType/@OWNERID')">fileType/@OWNERID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_SEQ" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileType/@SEQ')">fileType/@SEQ</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_USE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileType/@USE')">fileType/@USE</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_fileType_FContent_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileType/FContent/@ID')">fileType/FContent/@ID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_fileType_FContent_USE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileType/FContent/@USE')">fileType/FContent/@USE</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_fileType_FLocat_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileType/FLocat/@ID')">fileType/FLocat/@ID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_fileType_FLocat_USE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileType/FLocat/@USE')">fileType/FLocat/@USE</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_fileType_stream_ADMID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileType/stream/@ADMID')">fileType/stream/@ADMID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_fileType_stream_BEGIN" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileType/stream/@BEGIN')">fileType/stream/@BEGIN</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_fileType_stream_BETYPE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileType/stream/@BETYPE')">fileType/stream/@BETYPE</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_fileType_stream_DMDID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileType/stream/@DMDID')">fileType/stream/@DMDID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_fileType_stream_END" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileType/stream/@END')">fileType/stream/@END</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_fileType_stream_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileType/stream/@ID')">fileType/stream/@ID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_fileType_stream_OWNERID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileType/stream/@OWNERID')">fileType/stream/@OWNERID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_fileType_stream_streamType" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileType/stream/@streamType')">fileType/stream/@streamType</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_fileType_transformFile_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileType/transformFile/@ID')">fileType/transformFile/@ID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_fileType_transformFile_TRANSFORMALGORITHM" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileType/transformFile/@TRANSFORMALGORITHM')">fileType/transformFile/@TRANSFORMALGORITHM</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_fileType_transformFile_TRANSFORMBEHAVIOR" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileType/transformFile/@TRANSFORMBEHAVIOR')">fileType/transformFile/@TRANSFORMBEHAVIOR</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_fileType_transformFile_TRANSFORMKEY" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileType/transformFile/@TRANSFORMKEY')">fileType/transformFile/@TRANSFORMKEY</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_fileType_transformFile_TRANSFORMORDER" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileType/transformFile/@TRANSFORMORDER')">fileType/transformFile/@TRANSFORMORDER</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_fileType.html#fileType_fileType_transformFile_TRANSFORMTYPE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component fileType/transformFile/@TRANSFORMTYPE')">fileType/transformFile/@TRANSFORMTYPE</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_mdSecType.html#mdSecType_ADMID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component mdSecType/@ADMID')">mdSecType/@ADMID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_mdSecType.html#mdSecType_CREATED" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component mdSecType/@CREATED')">mdSecType/@CREATED</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_mdSecType.html#mdSecType_GROUPID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component mdSecType/@GROUPID')">mdSecType/@GROUPID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_mdSecType.html#mdSecType_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component mdSecType/@ID')">mdSecType/@ID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_mdSecType.html#mdSecType_STATUS" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component mdSecType/@STATUS')">mdSecType/@STATUS</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_mdSecType.html#mdSecType_mdSecType_mdRef_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component mdSecType/mdRef/@ID')">mdSecType/mdRef/@ID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_mdSecType.html#mdSecType_mdSecType_mdRef_LABEL" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component mdSecType/mdRef/@LABEL')">mdSecType/mdRef/@LABEL</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_mdSecType.html#mdSecType_mdSecType_mdRef_XPTR" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component mdSecType/mdRef/@XPTR')">mdSecType/mdRef/@XPTR</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_mdSecType.html#mdSecType_mdSecType_mdWrap_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component mdSecType/mdWrap/@ID')">mdSecType/mdWrap/@ID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_mdSecType.html#mdSecType_mdSecType_mdWrap_LABEL" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component mdSecType/mdWrap/@LABEL')">mdSecType/mdWrap/@LABEL</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component metsType/@ID')">metsType/@ID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_LABEL" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component metsType/@LABEL')">metsType/@LABEL</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_OBJID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component metsType/@OBJID')">metsType/@OBJID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_PROFILE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component metsType/@PROFILE')">metsType/@PROFILE</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_TYPE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component metsType/@TYPE')">metsType/@TYPE</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_metsType_fileSec_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component metsType/fileSec/@ID')">metsType/fileSec/@ID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_metsType_metsHdr_ADMID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component metsType/metsHdr/@ADMID')">metsType/metsHdr/@ADMID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_metsType_metsHdr_CREATEDATE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component metsType/metsHdr/@CREATEDATE')">metsType/metsHdr/@CREATEDATE</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_metsType_metsHdr_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component metsType/metsHdr/@ID')">metsType/metsHdr/@ID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_metsType_metsHdr_LASTMODDATE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component metsType/metsHdr/@LASTMODDATE')">metsType/metsHdr/@LASTMODDATE</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_metsType_metsHdr_RECORDSTATUS" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component metsType/metsHdr/@RECORDSTATUS')">metsType/metsHdr/@RECORDSTATUS</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_metsType_metsHdr_metsType_metsType_metsHdr_agent_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component metsType/metsHdr/agent/@ID')">metsType/metsHdr/agent/@ID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_metsType_metsHdr_metsType_metsType_metsHdr_agent_OTHERROLE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component metsType/metsHdr/agent/@OTHERROLE')">metsType/metsHdr/agent/@OTHERROLE</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_metsType_metsHdr_metsType_metsType_metsHdr_agent_OTHERTYPE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component metsType/metsHdr/agent/@OTHERTYPE')">metsType/metsHdr/agent/@OTHERTYPE</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_metsType_metsHdr_metsType_metsType_metsHdr_agent_ROLE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component metsType/metsHdr/agent/@ROLE')">metsType/metsHdr/agent/@ROLE</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_metsType_metsHdr_metsType_metsType_metsHdr_agent_TYPE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component metsType/metsHdr/agent/@TYPE')">metsType/metsHdr/agent/@TYPE</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_metsType_metsHdr_metsType_metsType_metsHdr_altRecordID_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component metsType/metsHdr/altRecordID/@ID')">metsType/metsHdr/altRecordID/@ID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_metsType_metsHdr_metsType_metsType_metsHdr_altRecordID_TYPE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component metsType/metsHdr/altRecordID/@TYPE')">metsType/metsHdr/altRecordID/@TYPE</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_metsType_metsHdr_metsType_metsType_metsHdr_metsDocumentID_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component metsType/metsHdr/metsDocumentID/@ID')">metsType/metsHdr/metsDocumentID/@ID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_metsType.html#metsType_metsType_metsHdr_metsType_metsType_metsHdr_metsDocumentID_TYPE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component metsType/metsHdr/metsDocumentID/@TYPE')">metsType/metsHdr/metsDocumentID/@TYPE</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_objectType.html#objectType_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component objectType/@ID')">objectType/@ID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_objectType.html#objectType_LABEL" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component objectType/@LABEL')">objectType/@LABEL</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_parType.html#parType_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component parType/@ID')">parType/@ID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_seqType.html#seqType_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component seqType/@ID')">seqType/@ID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_structLinkType.html#structLinkType_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component structLinkType/@ID')">structLinkType/@ID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_structLinkType.html#structLinkType_structLinkType_smLink_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component structLinkType/smLink/@ID')">structLinkType/smLink/@ID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_structLinkType.html#structLinkType_structLinkType_smLinkGrp_ARCLINKORDER" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component structLinkType/smLinkGrp/@ARCLINKORDER')">structLinkType/smLinkGrp/@ARCLINKORDER</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_structLinkType.html#structLinkType_structLinkType_smLinkGrp_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component structLinkType/smLinkGrp/@ID')">structLinkType/smLinkGrp/@ID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_structLinkType.html#structLinkType_structLinkType_smLinkGrp_structLinkType_structLinkType_smLinkGrp_smArcLink_ADMID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component structLinkType/smLinkGrp/smArcLink/@ADMID')">structLinkType/smLinkGrp/smArcLink/@ADMID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_structLinkType.html#structLinkType_structLinkType_smLinkGrp_structLinkType_structLinkType_smLinkGrp_smArcLink_ARCTYPE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component structLinkType/smLinkGrp/smArcLink/@ARCTYPE')">structLinkType/smLinkGrp/smArcLink/@ARCTYPE</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_structLinkType.html#structLinkType_structLinkType_smLinkGrp_structLinkType_structLinkType_smLinkGrp_smArcLink_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component structLinkType/smLinkGrp/smArcLink/@ID')">structLinkType/smLinkGrp/smArcLink/@ID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_structLinkType.html#structLinkType_structLinkType_smLinkGrp_structLinkType_structLinkType_smLinkGrp_smLocatorLink_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component structLinkType/smLinkGrp/smLocatorLink/@ID')">structLinkType/smLinkGrp/smLocatorLink/@ID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_structMapType.html#structMapType_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component structMapType/@ID')">structMapType/@ID</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_structMapType.html#structMapType_LABEL" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component structMapType/@LABEL')">structMapType/@LABEL</a></b></div>
+                                          <div><b><a href="mets_xsd_Complex_Type_structMapType.html#structMapType_TYPE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component structMapType/@TYPE')">structMapType/@TYPE</a></b></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </td>
+                        <td class="rt_lineRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_cornerBottomLeft"></td>
+                        <td class="rt_lineBottom"></td>
+                        <td class="rt_cornerBottomRight"></td>
+                     </tr>
+                  </table>
+               </div>
+               <div class="horizontalLayout">
+                  <table class="rt">
+                     <tr>
+                        <td class="rt_cornerTopLeft"></td>
+                        <td class="rt_lineTop"></td>
+                        <td class="rt_cornerTopRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_lineLeft"></td>
+                        <td class="rt_content">
+                           <table class="componentGroup">
+                              <tbody>
+                                 <tr>
+                                    <td class="componentGroup"><input id="button_Attribute_Group" type="image" value="-" src="img/btM.gif" onclick="switchState('Attribute_Group');" class="control" /></td>
+                                    <td class="componentGroup">
+                                       <div class="componentGroupTitle">Attribute Groups</div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="componentGroup"></td>
+                                    <td class="componentGroup">
+                                       <div id="Attribute_Group" class="componentGroup" style="display:block">
+                                          <div><b><a href="mets_xsd_Attribute_Group_FILECORE.html#FILECORE" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component FILECORE')">FILECORE</a></b></div>
+                                          <div><b><a href="mets_xsd_Attribute_Group_LOCATION.html#LOCATION" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component LOCATION')">LOCATION</a></b></div>
+                                          <div><b><a href="mets_xsd_Attribute_Group_METADATA.html#METADATA" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component METADATA')">METADATA</a></b></div>
+                                          <div><b><a href="mets_xsd_Attribute_Group_ORDERLABELS.html#ORDERLABELS" target="mainFrame" title="http://www.loc.gov/METS/" onclick="updatePageTitle('Schema documentation for component ORDERLABELS')">ORDERLABELS</a></b></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </td>
+                        <td class="rt_lineRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_cornerBottomLeft"></td>
+                        <td class="rt_lineBottom"></td>
+                        <td class="rt_cornerBottomRight"></td>
+                     </tr>
+                  </table>
+               </div>
+               <div style="clear:left"></div>
+            </div>
+         </div>
+      </div>
+      <div class="footer">
+         <hr />
+         <div align="center">XML Schema documentation generated by <a href="http://www.oxygenxml.com" target="_parent"><span class="oXygenLogo"><span class="redX">&lt;</span>o<span class="redX">X</span>ygen<span class="redX">/&gt;</span></span></a><sup>®</sup> XML Editor.
+         </div>
+      </div>
+   </body>
+</html>
