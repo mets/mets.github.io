@@ -1,0 +1,628 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <title>Schema documentation for </title>
+      <link rel="stylesheet" href="docHtml.css" type="text/css" /><script type="text/javascript"><!--
+        
+      
+        var button_prefix = 'button_';
+        
+        /**
+        * Returns an element in the current HTML document.
+        *
+        * @param elementID Identifier of HTML element
+        * @return               HTML element object
+        */
+        function getElementObject(elementID) {
+            var elemObj = null;
+            if (document.getElementById) {
+                elemObj = document.getElementById(elementID);
+            }
+            return elemObj;
+        }
+        
+        /**
+        * Switches the state of a collapseable box, e.g.
+        * if it's opened, it'll be closed, and vice versa.
+        *
+        * @param boxID Identifier of box
+        */
+        function switchState(boxID) {
+            var boxObj = getElementObject(boxID);
+            var buttonObj = getElementObject(button_prefix + boxID);
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else if (boxObj.style.display == "none") {
+                // Box is closed, so open it
+                openBox(boxObj, buttonObj);
+            } else if (boxObj.style.display == "block") {
+                // Box is opened, so close it
+                closeBox(boxObj, buttonObj);
+            }
+        }
+        
+        /**
+        * Opens a collapseable box.
+        *
+        * @param boxObj       Collapseable box
+        * @param buttonObj Button controlling box
+        */
+        function openBox(boxObj, buttonObj) {
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else {
+                // Change 'display' CSS property of box
+                boxObj.style.display = "block";
+                
+                // Change text of button
+                if (boxObj.style.display == "block") {
+                    buttonObj.src = "img/btM.gif";
+                }
+            }
+        }
+        
+        /**
+        * Closes a collapseable box.
+        *
+        * @param boxObj       Collapseable box
+        * @param buttonObj Button controlling box
+        */
+        function closeBox(boxObj, buttonObj) {
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else {
+                // Change 'display' CSS property of box
+                boxObj.style.display = "none";
+                
+                // Change text of button
+                if (boxObj.style.display == "none") {
+                    buttonObj.src = "img/btP.gif";
+                }
+            }
+        }
+    
+       function switchStateForAll(buttonObj, boxList) {
+            if (buttonObj == null) {
+                // button not found
+            } else if (buttonObj.value == "+") {
+                // Expand all
+                expandAll(boxList);
+                buttonObj.value = "-";
+            } else if (buttonObj.value == "-") {
+                // Collapse all
+                collapseAll(boxList);
+                buttonObj.value = "+";
+            }
+        }
+        
+        /**
+        * Closes all boxes in a given list.
+        *
+        * @param boxList Array of box IDs
+        */
+        function collapseAll(boxList) {
+            var idx;
+            for (idx = 0; idx < boxList.length; idx++) {
+                var boxObj = getElementObject(boxList[idx]);
+                var buttonObj = getElementObject(button_prefix + boxList[idx]);
+                closeBox(boxObj, buttonObj);
+            }
+        }
+            
+        /**
+        * Open all boxes in a given list.
+        *
+        * @param boxList Array of box IDs
+        */
+        function expandAll(boxList) {
+            var idx;
+            for (idx = 0; idx < boxList.length; idx++) {
+                var boxObj = getElementObject(boxList[idx]);
+                var buttonObj = getElementObject(button_prefix + boxList[idx]);
+                openBox(boxObj, buttonObj);
+            }
+        }
+        
+        /**
+         * Update the message presented in the title of the html page.
+         * - If the documentation was splited by namespace we present something like: "Documentation for namespace 'ns'"
+         * - If the documentation was splited by location we present somehing like: "Documentation for 'Schema.xsd'"
+         * - If no split we always present: "Documentation for 'MainSchema.xsd'"
+         */
+        function updatePageTitle(message) {
+            top.document.title = message;
+        }
+        
+          
+                    
+         /**
+          * Finds an HTML element by its ID and makes it floatable over the normal content.
+          *
+          * @param x_displacement The difference in pixels to the right side of the window from 
+          *           the left side of the element.
+          * @param y_displacement The difference in pixels to the right side of the window from 
+          *           the top of the element.          
+          */
+         function findAndFloat(id, x_displacement, y_displacement){
+
+            var element = getElementObject(id);            
+            
+            window[id + "_obj"] = element;
+            
+            if(document.layers) {
+               element.style = element;
+            }
+            
+            element.current_y = y_displacement;      
+            element.first_time = true;
+         
+            element.floatElement = function(){
+               // It may be closed by an user action.
+                
+               // Target X and Y coordinates.
+               var x, y;
+               
+               var myWidth = 0, myHeight = 0;
+               if( typeof( window.innerWidth ) == 'number' ) {
+                  //Non-IE
+                  myWidth = window.innerWidth;
+                  myHeight = window.innerHeight;
+               } else if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {
+                  //IE 6+ in 'standards compliant mode'
+                  myWidth = document.documentElement.clientWidth;
+                  myHeight = document.documentElement.clientHeight;
+               } else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
+                  //IE 4 compatible
+                  myWidth = document.body.clientWidth;
+                  myHeight = document.body.clientHeight;
+               }
+               
+               
+               x = myWidth - x_displacement;
+               
+               var ns = (navigator.appName.indexOf("Netscape") != -1);               
+               y = ns ? pageYOffset : document.documentElement && document.documentElement.scrollTop ? 
+                  document.documentElement.scrollTop : document.body.scrollTop;               
+               y = y + y_displacement;               
+               
+               // The current y is the current coordinate of the floating element.
+               // This should be at the limit the y target coordinate.
+               this.current_y += (y - this.current_y)/1.25;
+               
+               // Add the pixels constant after the values
+               // and move the element.
+               var px = document.layers ? "" : "px";
+               this.style.left =  x + px;
+               this.style.top =  this.current_y + px;
+                              
+               setTimeout(this.id + "_obj.floatElement()", 100);
+            }
+            
+            element.floatElement();
+            return element;
+          }
+
+         /**
+          * Finds an HTML element by its ID and makes it floatable over the normal content.
+          *
+          * @param x_displacement The difference in pixels to the right side of the window from 
+          *           the left side of the element.
+          * @param y_displacement The difference in pixels to the right side of the window from 
+          *           the top of the element.          
+          */
+         function selectTOCGroupBy(id, isChunked, indexFileLocation, indexFileNamespace, indexFileComponent){
+
+            if (!isChunked) {
+             var selectIds = new Array('toc_group_by_namespace', 'toc_group_by_location', 'toc_group_by_component_type');
+             // Make all the tabs invisible.
+               for (i = 0; i < 3; i++){
+                  var tab = getElementObject(selectIds[i]);
+                  tab.style.display = 'none';
+               }
+               var selTab = getElementObject(id);
+               selTab.style.display = 'block';
+            } else {
+             if (id == 'toc_group_by_namespace') {
+               parent.indexFrame.location = indexFileNamespace;
+             } else  if (id == 'toc_group_by_location') {
+               parent.indexFrame.location = indexFileLocation;
+             } else  if (id == 'toc_group_by_component_type') {
+              parent.indexFrame.location = indexFileComponent;
+             }
+            }
+         }
+          
+
+    
+                        //--></script></head>
+   <body>
+      <h2><a id="INDEX">Table of Contents</a></h2>
+      <div class="toc">
+         <form action="none">
+            <div><span> Group by: <select id="selectTOC" onchange="selectTOCGroupBy(this.options[this.selectedIndex].value, true, 'METS2_profile.indexList.html', 'METS2_profile.indexListns.html', 'METS2_profile.indexListcomp.html');">
+                     <option value="toc_group_by_namespace">Namespace</option>
+                     <option value="toc_group_by_location">Location</option>
+                     <option value="toc_group_by_component_type" selected="selected">Component Type</option></select></span></div>
+         </form>
+         <div class="level1" id="toc_group_by_component_type" style="display:block">
+            <div>
+               <div class="horizontalLayout">
+                  <table class="rt">
+                     <tr>
+                        <td class="rt_cornerTopLeft"></td>
+                        <td class="rt_lineTop"></td>
+                        <td class="rt_cornerTopRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_lineLeft"></td>
+                        <td class="rt_content">
+                           <table class="componentGroup">
+                              <tbody>
+                                 <tr>
+                                    <td class="componentGroup"><input id="button_Main_schema" type="image" alt="expand/collapse" src="img/btM.gif" onclick="switchState('Main_schema');" class="control" /></td>
+                                    <td class="componentGroup">
+                                       <div class="componentGroupTitle">Main Schema</div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="componentGroup"></td>
+                                    <td class="componentGroup">
+                                       <div id="Main_schema" class="componentGroup" style="display:block">
+                                          <div><b><a href="METS2_profile_xsd.html#METS2_profile.xsd" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS2_profile.xsd</a></b></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </td>
+                        <td class="rt_lineRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_cornerBottomLeft"></td>
+                        <td class="rt_lineBottom"></td>
+                        <td class="rt_cornerBottomRight"></td>
+                     </tr>
+                  </table>
+               </div>
+               <div class="horizontalLayout">
+                  <table class="rt">
+                     <tr>
+                        <td class="rt_cornerTopLeft"></td>
+                        <td class="rt_lineTop"></td>
+                        <td class="rt_cornerTopRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_lineLeft"></td>
+                        <td class="rt_content">
+                           <table class="componentGroup">
+                              <tbody>
+                                 <tr>
+                                    <td class="componentGroup"><input id="button_Element" type="image" alt="expand/collapse" src="img/btM.gif" onclick="switchState('Element');" class="control" /></td>
+                                    <td class="componentGroup">
+                                       <div class="componentGroupTitle">Elements</div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="componentGroup"></td>
+                                    <td class="componentGroup">
+                                       <div id="Element" class="componentGroup" style="display:block">
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_Appendix" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/Appendix</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_Example" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/Example</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_URI" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/URI</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_abstract" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/abstract</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_contact" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/contact</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_contact_address" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/contact/address</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_contact_email" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/contact/email</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_contact_institution" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/contact/institution</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_contact_name" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/contact/name</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_contact_phone" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/contact/phone</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_controlled_vocabularies" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/controlled_vocabularies</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_controlled_vocabularies_vocabulary" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/controlled_vocabularies/vocabulary</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_controlled_vocabularies_METS_Profile_METS_Profile_controlled_vocabularies_vocabulary_URI" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/controlled_vocabularies/vocabulary/URI</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_controlled_vocabularies_METS_Profile_METS_Profile_controlled_vocabularies_vocabulary_context" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/controlled_vocabularies/vocabulary/context</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_controlled_vocabularies_METS_Profile_METS_Profile_controlled_vocabularies_vocabulary_description" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/controlled_vocabularies/vocabulary/description</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_controlled_vocabularies_METS_Profile_METS_Profile_controlled_vocabularies_vocabulary_maintenance_agency" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/controlled_vocabularies/vocabulary/maintenance_agency</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_controlled_vocabularies_METS_Profile_METS_Profile_controlled_vocabularies_vocabulary_name" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/controlled_vocabularies/vocabulary/name</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_controlled_vocabularies_METS_Profile_METS_Profile_controlled_vocabularies_vocabulary_values" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/controlled_vocabularies/vocabulary/values</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_controlled_vocabularies_METS_Profile_METS_Profile_controlled_vocabularies_vocabulary_METS_Profile_METS_Profile_controlled_vocabularies_METS_Profile_METS_Profile_controlled_vocabularies_vocabulary_values_value" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/controlled_vocabularies/vocabulary/values/value</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_date" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/date</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_description_rules" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/description_rules</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_external_schema" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/external_schema</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_external_schema_URL" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/external_schema/URL</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_external_schema_context" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/external_schema/context</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_external_schema_name" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/external_schema/name</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_external_schema_note" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/external_schema/note</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_profile_context" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/profile_context</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_profile_context_resource_model" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/profile_context/resource_model</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_profile_context_uses" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/profile_context/uses</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_profile_context_METS_Profile_METS_Profile_profile_context_uses_use" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/profile_context/uses/use</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_related_profile" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/related_profile</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_structural_requirements" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/structural_requirements</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_structural_requirements_fileSec" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/structural_requirements/fileSec</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_structural_requirements_mdSec" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/structural_requirements/mdSec</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_structural_requirements_metsHdr" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/structural_requirements/metsHdr</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_structural_requirements_metsRootElement" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/structural_requirements/metsRootElement</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_structural_requirements_multiSection" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/structural_requirements/multiSection</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_structural_requirements_structSec" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/structural_requirements/structSec</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_technical_requirements" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/technical_requirements</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_technical_requirements_content_files" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/technical_requirements/content_files</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_technical_requirements_metadata_files" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/technical_requirements/metadata_files</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_title" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/title</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_tool" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/tool</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_tool_URI" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/tool/URI</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_tool_agency" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/tool/agency</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_tool_description" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/tool/description</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_tool_name" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/tool/name</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_tool_note" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/tool/note</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#reqs_requirement" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">reqs/requirement</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#requirementsType_description" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">requirementsType/description</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#requirementsType_tests" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">requirementsType/tests</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#requirementsType_requirementsType_tests_test" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">requirementsType/tests/test</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_testRef" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">requirementsType/tests/test/testRef</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_testString" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">requirementsType/tests/test/testString</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_testWrap" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">requirementsType/tests/test/testWrap</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_testWrap_testBin" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">requirementsType/tests/test/testWrap/testBin</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_testWrap_testXML" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">requirementsType/tests/test/testWrap/testXML</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#textSection_head" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">textSection/head</a></b></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </td>
+                        <td class="rt_lineRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_cornerBottomLeft"></td>
+                        <td class="rt_lineBottom"></td>
+                        <td class="rt_cornerBottomRight"></td>
+                     </tr>
+                  </table>
+               </div>
+               <div class="horizontalLayout">
+                  <table class="rt">
+                     <tr>
+                        <td class="rt_cornerTopLeft"></td>
+                        <td class="rt_lineTop"></td>
+                        <td class="rt_cornerTopRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_lineLeft"></td>
+                        <td class="rt_content">
+                           <table class="componentGroup">
+                              <tbody>
+                                 <tr>
+                                    <td class="componentGroup"><input id="button_Simple_Type" type="image" alt="expand/collapse" src="img/btM.gif" onclick="switchState('Simple_Type');" class="control" /></td>
+                                    <td class="componentGroup">
+                                       <div class="componentGroupTitle">Simple Types</div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="componentGroup"></td>
+                                    <td class="componentGroup">
+                                       <div id="Simple_Type" class="componentGroup" style="display:block">
+                                          <div><b><a href="METS2_profile_xsd.html#longString" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">longString</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#medString" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">medString</a></b></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </td>
+                        <td class="rt_lineRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_cornerBottomLeft"></td>
+                        <td class="rt_lineBottom"></td>
+                        <td class="rt_cornerBottomRight"></td>
+                     </tr>
+                  </table>
+               </div>
+               <div class="horizontalLayout">
+                  <table class="rt">
+                     <tr>
+                        <td class="rt_cornerTopLeft"></td>
+                        <td class="rt_lineTop"></td>
+                        <td class="rt_cornerTopRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_lineLeft"></td>
+                        <td class="rt_content">
+                           <table class="componentGroup">
+                              <tbody>
+                                 <tr>
+                                    <td class="componentGroup"><input id="button_Complex_Type" type="image" alt="expand/collapse" src="img/btM.gif" onclick="switchState('Complex_Type');" class="control" /></td>
+                                    <td class="componentGroup">
+                                       <div class="componentGroupTitle">Complex Types</div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="componentGroup"></td>
+                                    <td class="componentGroup">
+                                       <div id="Complex_Type" class="componentGroup" style="display:block">
+                                          <div><b><a href="METS2_profile_xsd.html#pType" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">pType</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#reqs" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">reqs</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#requirementsType" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">requirementsType</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#textSection" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">textSection</a></b></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </td>
+                        <td class="rt_lineRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_cornerBottomLeft"></td>
+                        <td class="rt_lineBottom"></td>
+                        <td class="rt_cornerBottomRight"></td>
+                     </tr>
+                  </table>
+               </div>
+               <div class="horizontalLayout">
+                  <table class="rt">
+                     <tr>
+                        <td class="rt_cornerTopLeft"></td>
+                        <td class="rt_lineTop"></td>
+                        <td class="rt_cornerTopRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_lineLeft"></td>
+                        <td class="rt_content">
+                           <table class="componentGroup">
+                              <tbody>
+                                 <tr>
+                                    <td class="componentGroup"><input id="button_Attribute" type="image" alt="expand/collapse" src="img/btM.gif" onclick="switchState('Attribute');" class="control" /></td>
+                                    <td class="componentGroup">
+                                       <div class="componentGroupTitle">Attributes</div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="componentGroup"></td>
+                                    <td class="componentGroup">
+                                       <div id="Attribute" class="componentGroup" style="display:block">
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_STATUS" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/@STATUS</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_Appendix_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/Appendix/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_Appendix_LABEL" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/Appendix/@LABEL</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_Appendix_NUMBER" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/Appendix/@NUMBER</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_Example_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/Example/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_Example_LABEL" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/Example/@LABEL</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_URI_ASSIGNEDBY" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/URI/@ASSIGNEDBY</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_URI_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/URI/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_URI_LOCTYPE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/URI/@LOCTYPE</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_URI_REGDATE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/URI/@REGDATE</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_abstract_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/abstract/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_contact_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/contact/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_contact_ROLE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/contact/@ROLE</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_contact_METS_Profile_METS_Profile_contact_address_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/contact/address/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_contact_METS_Profile_METS_Profile_contact_email_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/contact/email/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_contact_METS_Profile_METS_Profile_contact_institution_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/contact/institution/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_contact_METS_Profile_METS_Profile_contact_name_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/contact/name/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_contact_METS_Profile_METS_Profile_contact_phone_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/contact/phone/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_controlled_vocabularies_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/controlled_vocabularies/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_controlled_vocabularies_METS_Profile_METS_Profile_controlled_vocabularies_vocabulary_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/controlled_vocabularies/vocabulary/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_controlled_vocabularies_METS_Profile_METS_Profile_controlled_vocabularies_vocabulary_METS_Profile_METS_Profile_controlled_vocabularies_METS_Profile_METS_Profile_controlled_vocabularies_vocabulary_URI_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/controlled_vocabularies/vocabulary/URI/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_controlled_vocabularies_METS_Profile_METS_Profile_controlled_vocabularies_vocabulary_METS_Profile_METS_Profile_controlled_vocabularies_METS_Profile_METS_Profile_controlled_vocabularies_vocabulary_context_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/controlled_vocabularies/vocabulary/context/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_controlled_vocabularies_METS_Profile_METS_Profile_controlled_vocabularies_vocabulary_METS_Profile_METS_Profile_controlled_vocabularies_METS_Profile_METS_Profile_controlled_vocabularies_vocabulary_description_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/controlled_vocabularies/vocabulary/description/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_controlled_vocabularies_METS_Profile_METS_Profile_controlled_vocabularies_vocabulary_METS_Profile_METS_Profile_controlled_vocabularies_METS_Profile_METS_Profile_controlled_vocabularies_vocabulary_maintenance_agency_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/controlled_vocabularies/vocabulary/maintenance_agency/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_controlled_vocabularies_METS_Profile_METS_Profile_controlled_vocabularies_vocabulary_METS_Profile_METS_Profile_controlled_vocabularies_METS_Profile_METS_Profile_controlled_vocabularies_vocabulary_name_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/controlled_vocabularies/vocabulary/name/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_controlled_vocabularies_METS_Profile_METS_Profile_controlled_vocabularies_vocabulary_METS_Profile_METS_Profile_controlled_vocabularies_METS_Profile_METS_Profile_controlled_vocabularies_vocabulary_values_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/controlled_vocabularies/vocabulary/values/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_controlled_vocabularies_METS_Profile_METS_Profile_controlled_vocabularies_vocabulary_METS_Profile_METS_Profile_controlled_vocabularies_METS_Profile_METS_Profile_controlled_vocabularies_vocabulary_values_METS_Profile_METS_Profile_controlled_vocabularies_METS_Profile_METS_Profile_controlled_vocabularies_vocabulary_METS_Profile_METS_Profile_controlled_vocabularies_METS_Profile_METS_Profile_controlled_vocabularies_vocabulary_values_value_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/controlled_vocabularies/vocabulary/values/value/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_date_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/date/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_description_rules_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/description_rules/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_external_schema_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/external_schema/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_external_schema_METS_Profile_METS_Profile_external_schema_URL_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/external_schema/URL/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_external_schema_METS_Profile_METS_Profile_external_schema_URL_TARGETNAMESPACE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/external_schema/URL/@TARGETNAMESPACE</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_external_schema_METS_Profile_METS_Profile_external_schema_context_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/external_schema/context/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_external_schema_METS_Profile_METS_Profile_external_schema_name_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/external_schema/name/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_external_schema_METS_Profile_METS_Profile_external_schema_note_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/external_schema/note/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_profile_context_METS_Profile_METS_Profile_profile_context_uses_METS_Profile_METS_Profile_profile_context_METS_Profile_METS_Profile_profile_context_uses_use_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/profile_context/uses/use/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_profile_context_METS_Profile_METS_Profile_profile_context_uses_METS_Profile_METS_Profile_profile_context_METS_Profile_METS_Profile_profile_context_uses_use_REQID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/profile_context/uses/use/@REQID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_related_profile_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/related_profile/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_related_profile_RELATIONSHIP" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/related_profile/@RELATIONSHIP</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_related_profile_URI" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/related_profile/@URI</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_structural_requirements_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/structural_requirements/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_structural_requirements_METS_Profile_METS_Profile_structural_requirements_fileSec_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/structural_requirements/fileSec/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_structural_requirements_METS_Profile_METS_Profile_structural_requirements_mdSec_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/structural_requirements/mdSec/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_structural_requirements_METS_Profile_METS_Profile_structural_requirements_metsHdr_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/structural_requirements/metsHdr/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_structural_requirements_METS_Profile_METS_Profile_structural_requirements_metsRootElement_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/structural_requirements/metsRootElement/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_structural_requirements_METS_Profile_METS_Profile_structural_requirements_multiSection_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/structural_requirements/multiSection/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_structural_requirements_METS_Profile_METS_Profile_structural_requirements_structSec_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/structural_requirements/structSec/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_technical_requirements_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/technical_requirements/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_technical_requirements_METS_Profile_METS_Profile_technical_requirements_content_files_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/technical_requirements/content_files/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_technical_requirements_METS_Profile_METS_Profile_technical_requirements_metadata_files_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/technical_requirements/metadata_files/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_title_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/title/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_tool_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/tool/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_tool_METS_Profile_METS_Profile_tool_URI_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/tool/URI/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_tool_METS_Profile_METS_Profile_tool_agency_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/tool/agency/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_tool_METS_Profile_METS_Profile_tool_description_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/tool/description/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_tool_METS_Profile_METS_Profile_tool_name_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/tool/name/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#METS_Profile_METS_Profile_tool_METS_Profile_METS_Profile_tool_note_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">METS_Profile/tool/note/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#reqs_reqs_requirement_EXAMPLES" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">reqs/requirement/@EXAMPLES</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#reqs_reqs_requirement_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">reqs/requirement/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#reqs_reqs_requirement_RELATEDMAT" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">reqs/requirement/@RELATEDMAT</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#reqs_reqs_requirement_REQLEVEL" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">reqs/requirement/@REQLEVEL</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#requirementsType_requirementsType_tests_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">requirementsType/tests/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">requirementsType/tests/test/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_LABEL" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">requirementsType/tests/test/@LABEL</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_TESTLANGUAGE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">requirementsType/tests/test/@TESTLANGUAGE</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_TESTLANGUAGEURI" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">requirementsType/tests/test/@TESTLANGUAGEURI</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_TESTLANGUAGEVERSION" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">requirementsType/tests/test/@TESTLANGUAGEVERSION</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_testRef_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">requirementsType/tests/test/testRef/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_testRef_LOCREF" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">requirementsType/tests/test/testRef/@LOCREF</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_testRef_LOCTYPE" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">requirementsType/tests/test/testRef/@LOCTYPE</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_testString_CONTEXT" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">requirementsType/tests/test/testString/@CONTEXT</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_testString_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">requirementsType/tests/test/testString/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_testWrap_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">requirementsType/tests/test/testWrap/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_testWrap_requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_testWrap_testBin_CONTEXT" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">requirementsType/tests/test/testWrap/testBin/@CONTEXT</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_testWrap_requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_testWrap_testBin_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">requirementsType/tests/test/testWrap/testBin/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_testWrap_requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_testWrap_testXML_CONTEXT" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">requirementsType/tests/test/testWrap/testXML/@CONTEXT</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_testWrap_requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_requirementsType_requirementsType_tests_requirementsType_requirementsType_tests_test_testWrap_testXML_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">requirementsType/tests/test/testWrap/testXML/@ID</a></b></div>
+                                          <div><b><a href="METS2_profile_xsd.html#textSection_textSection_head_ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">textSection/head/@ID</a></b></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </td>
+                        <td class="rt_lineRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_cornerBottomLeft"></td>
+                        <td class="rt_lineBottom"></td>
+                        <td class="rt_cornerBottomRight"></td>
+                     </tr>
+                  </table>
+               </div>
+               <div class="horizontalLayout">
+                  <table class="rt">
+                     <tr>
+                        <td class="rt_cornerTopLeft"></td>
+                        <td class="rt_lineTop"></td>
+                        <td class="rt_cornerTopRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_lineLeft"></td>
+                        <td class="rt_content">
+                           <table class="componentGroup">
+                              <tbody>
+                                 <tr>
+                                    <td class="componentGroup"><input id="button_Element_Group" type="image" alt="expand/collapse" src="img/btM.gif" onclick="switchState('Element_Group');" class="control" /></td>
+                                    <td class="componentGroup">
+                                       <div class="componentGroupTitle">Element Groups</div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="componentGroup"></td>
+                                    <td class="componentGroup">
+                                       <div id="Element_Group" class="componentGroup" style="display:block">
+                                          <div><b><a href="METS2_profile_xsd.html#xhtmlelements" target="mainFrame" title="http://www.loc.gov/METS_Profile/vNNN" onclick="updatePageTitle('Schema documentation for METS2_profile.xsd')">xhtmlelements</a></b></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </td>
+                        <td class="rt_lineRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_cornerBottomLeft"></td>
+                        <td class="rt_lineBottom"></td>
+                        <td class="rt_cornerBottomRight"></td>
+                     </tr>
+                  </table>
+               </div>
+               <div style="clear:left"></div>
+            </div>
+         </div>
+      </div>
+      <div class="footer">
+         <hr />
+         <div style="text-align:center">XML Schema documentation generated by <a href="http://www.oxygenxml.com" target="_parent"><span class="oXygenLogo"><span class="redX">&lt;</span>o<span class="redX">X</span>ygen<span class="redX">/&gt;</span></span></a><sup>®</sup> XML Editor.</div>
+      </div>
+   </body>
+</html>
