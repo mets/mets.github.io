@@ -6,16 +6,22 @@ attributes of METS 2 were finalized in September 2022, but work on
 documentation and other supporting materials continues.
 
 The [METS 2 schema](https://github.com/mets/METS-schema/blob/mets2/v2/mets.xsd)
-is available to review and use. There are several supporting resources:
+is available for use, with several supporting resources:
 
-Resources available for METS 2.x:
+Resources available for METS 2:
 
-* [METS overview and tutorial](https://github.com/mets/METS-board/blob/mets2/web%20documents/metsoverview.md) updated for METS 2
+* [Overview and tutorial](https://github.com/mets/METS-board/blob/mets2/web%20documents/metsoverview.md)
 * [Detailed documentation](https://github.com/mets/mets-primer) (work in progress)
 * [Schema reference](https://mets.github.io/METS_v2_Docs/mets.html)
 * [Suggested attribute values](https://github.com/mets/METS-schema/wiki/METS2-Suggested-Attribute-Values)
 * [METS 1 to 2 transformation](https://github.com/mets/METS1to2)
-* [METS 2 Profiles schema](https://github.com/mets/METS-profiles/blob/profile-for-mets2/profile_docs/METS2_profile.xsd) (work in progress)
+
+## METS 2 Profiles
+
+Profiles for METS 2 are a work in progress.
+
+* Draft [METS 2 Profiles schema](https://github.com/mets/METS-profiles/blob/profile-for-mets2/profile_docs/METS2_profile.xsd)
+* METS 2 Profiles [schema reference](https://mets.github.io/METS2_Profile_Docs/METS2_profile.html)
 
 # Changes from METS 1 to METS 2
 
