@@ -120,9 +120,9 @@
     ><g font-family="sans-serif" font-size="11px" stroke-linecap="butt" text-rendering="optimizeLegibility"
     ><polygon clip-path="url(#clipPath1)" fill="none" points=" 218 220 219 219 219 218 220 217 221 216 222 215 223 215 224 214 231 214 238 207 245 214 530 214 531 215 532 215 533 216 534 217 535 218 535 219 536 220 536 242 535 243 535 244 534 245 533 246 532 247 531 247 530 248 224 248 223 247 222 247 221 246 220 245 219 244 219 243 218 242"
       /><text clip-path="url(#clipPath1)" font-size="10px" shape-rendering="crispEdges" stroke="none" text-rendering="geometricPrecision" x="221" xml:space="preserve" y="228"
-      >The structural map section &amp;lt;structMap&amp;gt; is the heart of a </text
+      >The structural map section &amp;lt;structMap&amp;gt; provides a means </text
       ><text clip-path="url(#clipPath1)" font-size="10px" shape-rendering="crispEdges" stroke="none" text-rendering="geometricPrecision" x="221" xml:space="preserve" y="242"
-      >METS document. It provides a means for organizing the...</text
+      >for organizing the digital content represented by the...</text
       ><line clip-path="url(#clipPath1)" fill="none" stroke="rgb(75,75,75)" stroke-width="2" x1="169" x2="172" y1="181" y2="181"
       /><line clip-path="url(#clipPath1)" fill="none" stroke="rgb(75,75,75)" stroke-width="2" x1="172" x2="172" y1="181" y2="181"
       /><line clip-path="url(#clipPath1)" fill="none" stroke="rgb(75,75,75)" stroke-width="2" x1="172" x2="218" y1="181" y2="181"

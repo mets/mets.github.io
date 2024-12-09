@@ -278,13 +278,13 @@
       /><text clip-path="url(#clipPath1)" font-size="10px" shape-rendering="crispEdges" stroke="none" text-rendering="geometricPrecision" x="3" xml:space="preserve" y="400"
       >The structural map section </text
       ><text clip-path="url(#clipPath1)" font-size="10px" shape-rendering="crispEdges" stroke="none" text-rendering="geometricPrecision" x="3" xml:space="preserve" y="414"
-      >&amp;lt;structMap&amp;gt; is the heart </text
+      >&amp;lt;structMap&amp;gt; provides a </text
       ><text clip-path="url(#clipPath1)" font-size="10px" shape-rendering="crispEdges" stroke="none" text-rendering="geometricPrecision" x="3" xml:space="preserve" y="428"
-      >of a METS document. It </text
+      >means for organizing the </text
       ><text clip-path="url(#clipPath1)" font-size="10px" shape-rendering="crispEdges" stroke="none" text-rendering="geometricPrecision" x="3" xml:space="preserve" y="442"
-      >provides a means for </text
+      >digital content represented by </text
       ><text clip-path="url(#clipPath1)" font-size="10px" shape-rendering="crispEdges" stroke="none" text-rendering="geometricPrecision" x="3" xml:space="preserve" y="456"
-      >organizing the...</text
+      >the...</text
     ></g
   ></g
 ></svg

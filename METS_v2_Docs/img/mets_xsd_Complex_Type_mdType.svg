@@ -270,7 +270,7 @@
       /><text clip-path="url(#clipPath1)" font-size="10px" shape-rendering="crispEdges" stroke="none" text-rendering="geometricPrecision" x="158" xml:space="preserve" y="615"
       >STATUS (string/O): Indicates the status of this metadata </text
       ><text clip-path="url(#clipPath1)" font-size="10px" shape-rendering="crispEdges" stroke="none" text-rendering="geometricPrecision" x="158" xml:space="preserve" y="629"
-      >(e.g., superseded, current, etc.).</text
+      >Suggested attribute values:...</text
     ></g
     ><g fill="rgb(255,239,211)" font-family="sans-serif" font-size="11px" shape-rendering="crispEdges" stroke="rgb(255,239,211)" stroke-linecap="butt" text-rendering="geometricPrecision"
     ><polygon clip-path="url(#clipPath1)" points=" 155 647 219 647 220 648 221 648 222 649 223 650 224 651 224 652 225 653 225 662 224 663 224 664 223 665 222 666 221 667 220 667 219 668 155 668" stroke="none"

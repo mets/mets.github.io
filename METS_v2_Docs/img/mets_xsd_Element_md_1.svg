@@ -294,7 +294,7 @@
       /><text clip-path="url(#clipPath1)" font-size="10px" shape-rendering="crispEdges" stroke="none" text-rendering="geometricPrecision" x="180" xml:space="preserve" y="655"
       >STATUS (string/O): Indicates the status of this metadata </text
       ><text clip-path="url(#clipPath1)" font-size="10px" shape-rendering="crispEdges" stroke="none" text-rendering="geometricPrecision" x="180" xml:space="preserve" y="669"
-      >(e.g., superseded, current, etc.).</text
+      >Suggested attribute values:...</text
     ></g
     ><g fill="rgb(255,239,211)" font-family="sans-serif" font-size="11px" shape-rendering="crispEdges" stroke="rgb(255,239,211)" stroke-linecap="butt" text-rendering="geometricPrecision"
     ><polygon clip-path="url(#clipPath1)" points=" 177 687 241 687 242 688 243 688 244 689 245 690 246 691 246 692 247 693 247 702 246 703 246 704 245 705 244 706 243 707 242 707 241 708 177 708" stroke="none"

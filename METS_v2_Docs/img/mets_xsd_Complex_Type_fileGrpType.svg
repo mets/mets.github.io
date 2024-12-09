@@ -200,7 +200,7 @@
       /><text clip-path="url(#clipPath1)" font-size="10px" shape-rendering="crispEdges" stroke="none" text-rendering="geometricPrecision" x="176" xml:space="preserve" y="417"
       >USE (string/O): A tagging attribute to indicate the intended </text
       ><text clip-path="url(#clipPath1)" font-size="10px" shape-rendering="crispEdges" stroke="none" text-rendering="geometricPrecision" x="176" xml:space="preserve" y="431"
-      >use of files within this file group (e.g., master,...</text
+      >use of files within this file group. A USE attribute can...</text
     ></g
     ><g fill="rgb(255,239,211)" font-family="sans-serif" font-size="11px" shape-rendering="crispEdges" stroke="rgb(255,239,211)" stroke-linecap="butt" text-rendering="geometricPrecision"
     ><polygon clip-path="url(#clipPath1)" points=" 173 449 237 449 238 450 239 450 240 451 241 452 242 453 242 454 243 455 243 464 242 465 242 466 241 467 240 468 239 469 238 469 237 470 173 470" stroke="none"

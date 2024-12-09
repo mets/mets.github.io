@@ -224,9 +224,9 @@
     ><g font-family="sans-serif" font-size="11px" stroke-linecap="butt" text-rendering="optimizeLegibility"
     ><polygon clip-path="url(#clipPath1)" fill="none" points=" 253 451 254 450 254 449 255 448 256 447 257 446 258 446 259 445 266 445 273 438 280 445 541 445 542 446 543 446 544 447 545 448 546 449 546 450 547 451 547 473 546 474 546 475 545 476 544 477 543 478 542 478 541 479 259 479 258 478 257 478 256 477 255 476 254 475 254 474 253 473"
       /><text clip-path="url(#clipPath1)" font-size="10px" shape-rendering="crispEdges" stroke="none" text-rendering="geometricPrecision" x="256" xml:space="preserve" y="459"
-      >TYPE (string/O): Specifies the class or type of the object, </text
+      >TYPE (string/O): Specifies the class or type of the object. </text
       ><text clip-path="url(#clipPath1)" font-size="10px" shape-rendering="crispEdges" stroke="none" text-rendering="geometricPrecision" x="256" xml:space="preserve" y="473"
-      >e.g.: book, journal, stereograph, dataset, video, etc.</text
+      >Suggested attribute values:...</text
     ></g
     ><g fill="rgb(255,239,211)" font-family="sans-serif" font-size="11px" shape-rendering="crispEdges" stroke="rgb(255,239,211)" stroke-linecap="butt" text-rendering="geometricPrecision"
     ><polygon clip-path="url(#clipPath1)" points=" 253 491 343 491 344 492 345 492 346 493 347 494 348 495 348 496 349 497 349 512 348 512 348 512 347 512 346 512 345 512 344 512 343 512 253 512" stroke="none"
@@ -259,9 +259,9 @@
     ><g font-family="sans-serif" font-size="11px" stroke-linecap="butt" text-rendering="optimizeLegibility"
     ><polygon clip-path="url(#clipPath1)" fill="none" points=" 253 550 254 549 254 548 255 547 256 546 257 545 258 545 259 544 266 544 273 537 280 544 541 544 542 545 543 545 544 546 545 547 546 548 546 549 547 550 547 572 546 573 546 574 545 575 544 576 543 577 542 577 541 578 259 578 258 577 257 577 256 576 255 575 254 574 254 573 253 572"
       /><text clip-path="url(#clipPath1)" font-size="10px" shape-rendering="crispEdges" stroke="none" text-rendering="geometricPrecision" x="256" xml:space="preserve" y="558"
-      >PROFILE (string/O): Indicates to which of the registered </text
+      >PROFILE (string/O): Indicates the URI of the METS Profile </text
       ><text clip-path="url(#clipPath1)" font-size="10px" shape-rendering="crispEdges" stroke="none" text-rendering="geometricPrecision" x="256" xml:space="preserve" y="572"
-      >profile(s) the METS document conforms. For additional...</text
+      >this METS document conforms to.</text
     ></g
     ><g fill="rgb(255,239,211)" font-family="sans-serif" font-size="11px" shape-rendering="crispEdges" stroke="rgb(255,239,211)" stroke-linecap="butt" text-rendering="geometricPrecision"
     ><polygon clip-path="url(#clipPath1)" points=" 253 590 317 590 318 591 319 591 320 592 321 593 322 594 322 595 323 596 323 605 322 606 322 607 321 608 320 609 319 610 318 610 317 611 253 611" stroke="none"

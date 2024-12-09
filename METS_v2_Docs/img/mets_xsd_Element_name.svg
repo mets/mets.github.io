@@ -64,9 +64,9 @@
       ><text clip-path="url(#clipPath1)" font-size="10px" shape-rendering="crispEdges" stroke="none" text-rendering="geometricPrecision" x="3" xml:space="preserve" y="81"
       >can be used to record the </text
       ><text clip-path="url(#clipPath1)" font-size="10px" shape-rendering="crispEdges" stroke="none" text-rendering="geometricPrecision" x="3" xml:space="preserve" y="95"
-      >full name of the document </text
+      >full name of the METS </text
       ><text clip-path="url(#clipPath1)" font-size="10px" shape-rendering="crispEdges" stroke="none" text-rendering="geometricPrecision" x="3" xml:space="preserve" y="109"
-      >agent.</text
+      >document agent.</text
     ></g
   ></g
 ></svg

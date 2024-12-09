@@ -129,9 +129,9 @@
     ><g font-family="sans-serif" font-size="11px" stroke-linecap="butt" text-rendering="optimizeLegibility"
     ><polygon clip-path="url(#clipPath1)" fill="none" points=" 240 294 241 293 241 292 242 291 243 290 244 289 245 289 246 288 253 288 260 281 267 288 528 288 529 289 530 289 531 290 532 291 533 292 533 293 534 294 534 316 533 317 533 318 532 319 531 320 530 321 529 321 528 322 246 322 245 321 244 321 243 320 242 319 241 318 241 317 240 316"
       /><text clip-path="url(#clipPath1)" font-size="10px" shape-rendering="crispEdges" stroke="none" text-rendering="geometricPrecision" x="243" xml:space="preserve" y="302"
-      >TYPE (string/O): A description of the identifier type (e.g., </text
+      >TYPE (string/O): A description of the identifier type. </text
       ><text clip-path="url(#clipPath1)" font-size="10px" shape-rendering="crispEdges" stroke="none" text-rendering="geometricPrecision" x="243" xml:space="preserve" y="316"
-      >OCLC record number, LCCN, etc.).</text
+      >Suggested attribute values:...</text
       ><line clip-path="url(#clipPath1)" fill="none" stroke="rgb(75,75,75)" stroke-width="2" x1="178" x2="201" y1="111" y2="111"
       /><line clip-path="url(#clipPath1)" fill="none" stroke="rgb(75,75,75)" stroke-width="2" x1="201" x2="201" y1="25" y2="111"
       /><line clip-path="url(#clipPath1)" fill="none" stroke="rgb(75,75,75)" stroke-width="2" x1="213" x2="226" y1="13" y2="13"

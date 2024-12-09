@@ -60,9 +60,9 @@
     ><g font-family="sans-serif" font-size="11px" stroke-linecap="butt" text-rendering="optimizeLegibility"
     ><polygon clip-path="url(#clipPath1)" fill="none" points=" 131 59 132 58 132 57 133 56 134 55 135 54 136 54 137 53 144 53 151 46 158 53 419 53 420 54 421 54 422 55 423 56 424 57 424 58 425 59 425 81 424 82 424 83 423 84 422 85 421 86 420 86 419 87 137 87 136 86 135 86 134 85 133 84 132 83 132 82 131 81"
       /><text clip-path="url(#clipPath1)" font-size="10px" shape-rendering="crispEdges" stroke="none" text-rendering="geometricPrecision" x="134" xml:space="preserve" y="67"
-      >MIMETYPE (string/O): The IANA MIME media type for the </text
+      >MIMETYPE (string/O): The IANA media type (formerly known </text
       ><text clip-path="url(#clipPath1)" font-size="10px" shape-rendering="crispEdges" stroke="none" text-rendering="geometricPrecision" x="134" xml:space="preserve" y="81"
-      >associated file or wrapped content. Some values for this...</text
+      >as MIME type) for the associated file or wrapped content....</text
       ><line clip-path="url(#clipPath1)" fill="none" stroke="rgb(75,75,75)" stroke-width="2" x1="103" x2="106" y1="218" y2="218"
       /><line clip-path="url(#clipPath1)" fill="none" stroke="rgb(75,75,75)" stroke-width="2" x1="106" x2="106" y1="32" y2="218"
       /><line clip-path="url(#clipPath1)" fill="none" stroke="rgb(75,75,75)" stroke-width="2" x1="118" x2="131" y1="20" y2="20"
