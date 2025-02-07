@@ -1,6 +1,6 @@
 # METS 2
 
-METS 2 is expected to be released by the end of 2024. The elements and
+METS 2 is nearing its final release. The elements and
 attributes of METS 2 were finalized in September 2022, but work on
 documentation and other supporting materials continues.
 
