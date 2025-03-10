@@ -1,17 +1,16 @@
 # METS 2
 
-METS 2 is nearing its final release. The elements and
-attributes of METS 2 were finalized in September 2022, but work on
-documentation and other supporting materials continues.
+The Metadata Encoding and Transmission Schema (METS) Version 2 is now
+available. This is a new major revision of the schema.
 
-The [METS 2 schema](https://github.com/mets/METS-schema/blob/mets2/v2/mets.xsd)
+The [METS 2 schema](https://github.com/mets/METS-schema/blob/main/v2/mets.xsd)
 is available for use, with several supporting resources:
 
 Resources available for METS 2:
 
 * [Overview and tutorial](metsoverview.html)
 * [Detailed documentation](/METS-primer) (work in progress)
-* [Schema reference](METS_v2_Docs/mets.html)
+* [Schema reference](METS_v2_Docs/mets2.html)
 * [Suggested attribute values](https://github.com/mets/METS-schema/wiki/METS2-Suggested-Attribute-Values)
 * [METS 1 to 2 transformation](https://github.com/mets/METS1to2)
 
@@ -36,7 +35,7 @@ fully-worked examples of METS 2 documents.
 
 METS 1.x continues to be available.
 
-* [METS Schema Version 1.12.1](https://github.com/mets/METS-schema/blob/master/mets.xsd)
+* [METS Schema Version 1.12.1](https://github.com/mets/METS-schema/blob/main/version1121/mets.xsd)
 * [METS 1.12.1 Schema Reference](METS_v1_Docs/mets.html)
 * [Library of Congress METS Resources](https://www.loc.gov/standards/mets/mets-schemadocs.html)
 
