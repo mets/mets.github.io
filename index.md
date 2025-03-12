@@ -13,6 +13,7 @@ Resources available for METS 2:
 * [Schema reference](METS_v2_Docs/mets2.html)
 * [Suggested attribute values](https://github.com/mets/METS-schema/wiki/METS2-Suggested-Attribute-Values)
 * [METS 1 to 2 transformation](https://github.com/mets/METS1to2)
+* [Examples](https://github.com/mets/METS-schema/tree/main/v2/examples) of migrating METS 1 to METS 2
 
 ## METS 2 Profiles
 
