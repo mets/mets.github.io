@@ -1,18 +1,18 @@
-# METS: An Overview & Tutorial
+# METS Version 2: An Overview & Tutorial
 
 ## Introduction
 
-METS is a standard for the encoding of descriptive, administrative, and
-structural metadata for complex digital objects, whether these are text-,
-video- or image-based. A [Digital Library Federation](http://www.diglib.org/)
-initiative, METS provides an XML document format for encoding metadata
-necessary for both the management of digital objects within a repository and
-the exchange of such objects between repositories, or between repositories and
-their users. Depending on its use, a METS document can  be used in the role of
-Submission Information Package (SIP), Archival Information Package (AIP), or
-Dissemination Information Package (DIP) within the [Open Archival Information
-System (OAIS) Reference
-Model](http://nssdc.gsfc.nasa.gov/nost/isoas/ref_model.html).
+The Metadata Encoding and Transmission Standard (METS) version 2 is a standard
+for the encoding of descriptive, administrative, and structural metadata for
+complex digital objects, whether these are text-, video- or image-based.
+Originally a [Digital Library Federation](http://www.diglib.org/) initiative,
+METS provides an XML document format for encoding metadata necessary for both
+the management of digital objects within a repository and the exchange of such
+objects between repositories, or between repositories and their users.
+Depending on its use, a METS document can  be used in the role of Submission
+Information Package (SIP), Archival Information Package (AIP), or Dissemination
+Information Package (DIP) within the [Open Archival Information System (OAIS)
+Reference Model](https://public.ccsds.org/Pubs/650x0m3.pdf).
 
 METS provides a coherent integrated framework for the complex set of metadata
 needed for maintaining a library of digital objects. This metadata is both more
