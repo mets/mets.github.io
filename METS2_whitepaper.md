@@ -4,7 +4,7 @@
 
 METS, the Metadata Encoding & Transmission Standard, has been used for describing digital objects since 2001. The METS XML schema version 1.x (METS 1) is used both as an interchange and a storage format by numerous systems in the digital preservation space [^coptr] [^profiles]. A METS document can describe the files that make up a digital object, their structural relationship to each other, and include a variety of metadata about the digital object and its component files.
 
-The METS Editorial Board is working on version 2 of the Metadata Encoding & Transmission Standard (METS), work which aims to make METS easier to use and implement. Version 2 simplifies the schema, makes it more consistent, and removes reliance on the outdated XLink standard. It aims to retain a clear path for migration from METS 1 for most use cases. In this document the METS Editorial Board presents details of the each change along with a variety of examples. Work in progress on the draft METS 2 schema is available [on GitHub](https://github.com/mets/METS-schema/blob/mets2/v2/mets.xsd).
+The METS Editorial Board is working on version 2 of the Metadata Encoding & Transmission Standard (METS), work which aims to make METS easier to use and implement. Version 2 simplifies the schema, makes it more consistent, and removes reliance on the outdated XLink standard. It aims to retain a clear path for migration from METS 1 for most use cases. In this document the METS Editorial Board presents details of the each change along with a variety of examples. Work in progress on the draft METS 2 schema is available [on GitHub](https://github.com/mets/METS-schema/blob/mets2/v2/mets2.xsd).
 
 ### Motivation
 

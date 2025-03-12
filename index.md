@@ -3,7 +3,7 @@
 The Metadata Encoding and Transmission Schema (METS) Version 2 is now
 available. This is a new major revision of the schema.
 
-The [METS 2 schema](https://github.com/mets/METS-schema/blob/main/v2/mets.xsd)
+The [METS 2 schema](https://github.com/mets/METS-schema/blob/main/v2/mets2.xsd)
 is available for use, with several supporting resources:
 
 Resources available for METS 2:
