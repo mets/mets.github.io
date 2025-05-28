@@ -9,7 +9,7 @@ is available for use, with several supporting resources:
 Resources available for METS 2:
 
 * [Overview and tutorial](metsoverview.html)
-* [Detailed documentation](/METS-primer) (work in progress)
+* [METS Guide](/METS-guide) with detailed documentation and examples
 * [Schema reference](METS_v2_Docs/mets2.html)
 * [Suggested attribute values](https://github.com/mets/METS-schema/wiki/METS2-Suggested-Attribute-Values)
 * [METS 1 to 2 transformation](https://github.com/mets/METS1to2)
