@@ -19,7 +19,7 @@ We hope to fill our vacancies by April 2026.
 
 ## Process for Application Review
 
-All Board members will review all the applications; responsibility for
+All Board members will review all the applications. Responsibility for
 coordinating and completing the evaluation process is given to one or more
 board members. Rating of candidates compared to the criteria will be made for
 full Board review and for documentation purposes. There may be interviews of
@@ -32,7 +32,7 @@ face to face meetings.
 ## Questions?
 
 Questions about Board membership, goals, and processes can be directed to
-[metseditorialboardmail@gmail.com](mailto:metseditorialboardmail@gmail.com) .  
+[metseditorialboardmail@gmail.com](mailto:metseditorialboardmail@gmail.com).  
 
 Please consider joining the Board if you're interested in working with an
 international group of experienced and congenial digital libraries, archives
@@ -40,5 +40,5 @@ and museums as well as preservation partners.
 
 Regards,
 
-The METS Board
+The METS Board\
 October 9, 2025
