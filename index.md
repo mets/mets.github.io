@@ -46,3 +46,7 @@ METS is maintained by the [METS Editorial
 Board](https://www.loc.gov/standards/mets/mets-board.html). To contact the
 board, provide feedback, and discuss METS 2, [join the METS mailing
 list](https://www.loc.gov/standards/mets/mets-list-enter.html).
+
+## Applications for Editorial Board membership open
+
+Join us in our work! The METS Editorial Board is [soliciting applications](callformembers.html) for vacancies in its membership through January 31, 2026.
