@@ -1,4 +1,4 @@
-# METS Editorial Board -- Call for Members
+# METS Editorial Board -- Call for Members -- Call Extended
 
 As of October 2025, the METS Editorial Board is soliciting applications for
 vacancies in its membership.
@@ -12,10 +12,9 @@ documented on the METS website.
 Your application should include a resume or curriculum vitae with a cover
 letter describing your interest in applying for the position.  
    
-The deadline for applications is January 31, 2026.  Applications should be sent
+The deadline for applications is April 12, 2026.  Applications should be sent
 to the METS board
 [metseditorialboardmail@gmail.com](mailto:metseditorialboardmail@gmail.com).
-We hope to fill our vacancies by April 2026.
 
 ## Process for Application Review
 
