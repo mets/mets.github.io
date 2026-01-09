@@ -47,6 +47,6 @@ Board](https://www.loc.gov/standards/mets/mets-board.html). To contact the
 board, provide feedback, and discuss METS 2, [join the METS mailing
 list](https://www.loc.gov/standards/mets/mets-list-enter.html).
 
-## Applications for Editorial Board membership open
+## Applications for Editorial Board membership open -- Call Extended
 
-Join us in our work! The METS Editorial Board is [soliciting applications](callformembers.html) for vacancies in its membership through January 31, 2026.
+Join us in our work! The METS Editorial Board is [soliciting applications](callformembers.html) for vacancies in its membership through April 12, 2026.
