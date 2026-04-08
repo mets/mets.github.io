@@ -49,4 +49,4 @@ list](https://www.loc.gov/standards/mets/mets-list-enter.html).
 
 ## Applications for Editorial Board membership open -- Call Extended
 
-Join us in our work! The METS Editorial Board is [soliciting applications](callformembers.html) for vacancies in its membership through April 12, 2026.
+Join us in our work! The METS Editorial Board is [soliciting applications](callformembers.html) for vacancies in its membership.
